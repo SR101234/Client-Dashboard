@@ -8,7 +8,7 @@ const app = express();
 app.use(express.json());
 
 const corsOption ={
-    origin:"https://client-dashboard-suigeneris.vercel.app",
+    origin:"http://localhost:5173",
     methods: "GET, PUT, PATCH, DELETE, POST, HEAD",
     credentials:true
 }
