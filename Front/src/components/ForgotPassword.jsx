@@ -18,6 +18,7 @@ const ForgotPassword = () => {
       setPAN('');
     } catch (error) {
 
+
     } finally {
       setSubmitting(false);
     }
@@ -25,13 +26,14 @@ const ForgotPassword = () => {
 
   return (
     <Box maxW="lg" mx="auto" mt="12" p="6" borderWidth="1px" borderRadius="lg" boxShadow="md">
-      <Heading size="lg" mb="4">Forgot Password</Heading>
-      <Text mb="6">Enter your PAN number to receive a password reset link.</Text>
+      <Heading size="lg" mb="4" >Forgot Password</Heading>
+      <Text mb="6" >Enter your PAN number to receive a password reset link.</Text>
 
       <form onSubmit={handleSubmit}>
         <FormControl>
           <FormLabel>PAN Number</FormLabel>
-          <Input
+          <Input 
+            style={{width:"100%"}}
             type='text'
             placeholder="ABCDE0123F"
             value={PAN.trim().toUpperCase()}
@@ -55,7 +57,7 @@ const ForgotPassword = () => {
 
 const PasswordReset = async (PAN) =>{
 
-  const response = await fetch(`https://client-dashboard-ruby.vercel.app/forgotpassword`,{
+  const response = await fetch(`http://localhost:5000/forgotpassword`,{
         method:"POST",
         credentials: 'include',
         headers:{
@@ -64,11 +66,11 @@ const PasswordReset = async (PAN) =>{
         body: JSON.stringify({PAN})
     })
   const res = await response.json();
-  if(res.message==="Mail Sent"){
-    toast.success(res.message);
+  if(!response.ok){
+    toast.error(res.message);
   }
   else{
-    toast.error(res.message)
+    toast.success(res.message)
   }
 }
 

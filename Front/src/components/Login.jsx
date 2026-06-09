@@ -24,7 +24,7 @@ const Login = () => {
         setLoading(false);
         return;
       }
-      const response = await fetch(`https://client-dashboard-ruby.vercel.app/login`,{
+      const response = await fetch(`http://localhost:5000/login`,{
         method:"POST",
         credentials: 'include',
         headers:{
@@ -47,17 +47,17 @@ const Login = () => {
     return (
     <div className="outer">
       <div className="login-container">
-        <h2>Login</h2>
+        <h2 style={{color:"white",fontWeight:"bold",fontSize:"xx-larger"}}>Login</h2>
         <form onSubmit={handleSubmit}>
           <div className="form-group">
-            <label>PAN:</label><br />
-            <Input value={PAN.trim().toUpperCase()}
+            <label>PAN:</label>
+            <Input className="paninput" value={PAN.trim().toUpperCase()}
               onChange={(e) => setPan(e.target.value)}/>
 
           </div>
           <div className="form-group">
             <label>Password:</label>
-            <PasswordInput value={pass.trim()} onChange={(e) => setPassword(e.target.value)}/>
+            <PasswordInput className="paninput" value={pass.trim()} onChange={(e) => setPassword(e.target.value)}/>
           </div>
           <Button loading={loading} type="submit" className="loginbtn">Login</Button>
           <br />

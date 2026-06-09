@@ -2,7 +2,7 @@ import { Box, Button, Heading, Input, Spinner, Text } from '@chakra-ui/react';
 import { FormControl, FormLabel } from '@mui/material';
 import React, { useState } from 'react';
 import { toast } from 'react-toastify';
-import { useSearchParams, Link } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 
 
 
@@ -53,15 +53,17 @@ const ResetPassword = () => {
 
       <form onSubmit={handleSubmit}>
         <FormControl>
-          <FormLabel>pass address</FormLabel>
+          <FormLabel>New Password</FormLabel>
           <Input
             type="pass"
+            className='paninput'
             placeholder="New Password"
             value={pass.trim()}
             onChange={(e) => setpass(e.target.value)}
           />
-          <FormLabel>pass address</FormLabel>
-          <Input
+          <FormLabel>Confirm Password</FormLabel>
+
+          <Input className='paninput'
             type="pass"
             placeholder="Confirm Password"
             value={confpass.trim()}

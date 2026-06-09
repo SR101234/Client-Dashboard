@@ -9,7 +9,7 @@ const ChatPage =  () => {
   const [response,setResponse] = useState();
   useEffect(()=>{
    const fetching = async() =>{
-    const temp = await fetch(`https://client-dashboard-ruby.vercel.app/comments`,{
+    const temp = await fetch(`http://localhost:5000/comments`,{
         method:"POST",
         credentials: 'include',
         headers:{
@@ -74,6 +74,7 @@ const ChatPage =  () => {
       </Box>
       <HStack>
         <Input
+         style={{width:"100%"}}
           placeholder="Type a message..."
           value={input}
           onChange={(e) => setInput(e.target.value)}

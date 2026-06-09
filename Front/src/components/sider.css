@@ -5,9 +5,10 @@
 
 .r1{
     font-size: x-large;
-    background-color: rgb(17,17,17);
     text-align: center;
     padding: 5%;
+    background: none;
+    
 }
 
 .tb{
@@ -16,12 +17,16 @@
 
 .logout{
     width: 25%;
+    
 }
 .chakra-button:hover{
-    background-color: rgb(41, 41, 41);
+    border-radius: 1px solid white;
 }
 
 .r1:hover{
-    background-color: rgb(41, 41, 41);
     font-weight: bold;
+}
+
+.logout:hover{
+    font-weight: bolder;
 }

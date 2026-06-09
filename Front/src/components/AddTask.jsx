@@ -1,27 +1,33 @@
 import { Button, CloseButton, Drawer, Field, Input, NativeSelect, NumberInput, Portal } from "@chakra-ui/react"
-import { use, useState } from "react";
+import { useContext, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { toast } from 'react-toastify';
+import './AddTask.css';
+import { AssigneeContext } from "../AssigneesContext";
 
 
 const AddTask =(DB_ID)=>{
+    const {ID} = useContext(AssigneeContext);
+    // const ID = JSON.parse(localStorage.getItem("AssigneeIDList"));
+   
     const [load,setLoad] = useState(false);
     const [values,setValue] = useState({
         Task_Name: "",
         Due_Date: new Date(),
         Priority: "",
         Frequency: "",
+        AssigneeID: ""
     
     })
-
+    
    const handleClick = async()=>{
     if(values.Task_Name.length===0){
       toast.error("Task Name Required");
       return;
     }
     setLoad(!load);
-    const response = await fetch(`https://client-dashboard-ruby.vercel.app/createTask`,{
+    const response = await fetch(`http://localhost:5000/createTask`,{
             method:"POST",
             credentials: 'include',
             headers:{
@@ -31,7 +37,8 @@ const AddTask =(DB_ID)=>{
   Due_Date: values.Due_Date,
   Frequency: values.Frequency,
   Priority: values.Priority,
-  db_id: DB_ID.DB_ID
+  db_id: DB_ID.DB_ID,
+  AssigneeID: values.AssigneeID
 })
             
         })
@@ -51,10 +58,10 @@ const AddTask =(DB_ID)=>{
 
     return(<>
     
-    <div style={{display:"flex",justifyContent:"center", position:'sticky', bottom:"10px"}}>
+    <div className="plate">
     <Drawer.Root placement={"bottom"} >
       <Drawer.Trigger asChild>
-        <Button variant="outline" size="xl" padding={'3'} background={"green"} style={{border:"2px solid white", fontSize:"larger"}}>
+        <Button variant="outline" size="xl" padding={'3'} background={"green"} style={{border:"2px solid white", fontSize:"larger", color:"white"}}>
           Add Task
         </Button>
       </Drawer.Trigger>
@@ -63,10 +70,10 @@ const AddTask =(DB_ID)=>{
         <Drawer.Positioner>
           <Drawer.Content style={{padding:"1%"}}>
             <Drawer.Body>
-            <div style={{display:"flex", justifyContent:"space-evenly", padding:"1% 1% 2% 1%"}}>
-            <Input placeholder="Task Name" style={{width:"15%"}} onChange={(e)=>setValue(prev => ({...prev,Task_Name: e.target.value}))}/>
-            <DatePicker placeholderText="Due Date" selected={values.Due_Date} onChange={(date)=>setValue(prev=>({...prev,Due_Date:date}))}/>
-             <NativeSelect.Root size="md" width="240px">
+            <div className="template">
+            <Input className="inputTask" placeholder="Task Name" onChange={(e)=>setValue(prev => ({...prev,Task_Name: e.target.value}))}/>
+            <DatePicker className="datePick" placeholderText="Due Date" selected={values.Due_Date} onChange={(date)=>setValue(prev=>({...prev,Due_Date:date}))}/>
+             <NativeSelect.Root size="md" width="150px">
              <NativeSelect.Field placeholder="Select Priority" padding={'1.5'} onChange={(e)=>setValue(prev=>({...prev,Priority: e.target.value}))}>
              <option value="Low">Low</option>
              <option value="Medium">Medium</option>
@@ -92,6 +99,17 @@ const AddTask =(DB_ID)=>{
            <NativeSelect.Indicator />
          </NativeSelect.Root>
          
+
+          <NativeSelect.Root size="md" width="200px">
+             <NativeSelect.Field placeholder="Assigned To" padding={'1.5'} onChange={(e)=>setValue(prev=>({...prev,AssigneeID: e.target.value}))}>
+              {Array.isArray(ID) && ID.map((id)=>(
+                <option key={id.ID} value={id.ID}>{id.Name}</option>
+              ))}
+            
+           </NativeSelect.Field>
+           <NativeSelect.Indicator />
+         </NativeSelect.Root>
+
    
             </div>
             </Drawer.Body>
